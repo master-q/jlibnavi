@@ -17,8 +17,11 @@ fn showlib(user: &str, pass: &str) {
     tab.type_str(&pass).unwrap();
     tab.press_key("Enter").unwrap();
 
-    let g = tab.wait_for_element("#nav-guide2 > li").unwrap();
-    let msg = g.get_inner_text().unwrap();
+    let g = tab.wait_for_element("#nav-guide2 > li");
+    let msg = match g {
+	Ok(gok) => gok.get_inner_text().unwrap(),
+	Err(_) => "No message".to_string(),
+    };
     println!("{}", msg);
 }
 
